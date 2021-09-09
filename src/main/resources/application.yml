@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/java_api
+    username: root
+    password:
+# JPA = RDBをJavaアプリケーションから操作するための仕組み
+  jpa:
+    database: mysql
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      encoding: UTF-8
+      mode: never
+      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+  jackson:    # Java用のJSONパーサライブラリでオブジェクトとJSONとを相互変換できる
+    default-property-inclusion: non_null    # 値がNULLのプロパティは出力しない
+    serialization:
+      indent_output: true    # レスポンスにインデントが入る
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    throw-exception-if-no-handler-found: true
