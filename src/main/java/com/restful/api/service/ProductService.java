@@ -1,6 +1,7 @@
 package com.restful.api.service;
 
 import com.restful.api.entity.Product;
+import com.restful.api.exception.ProductNotFoundException;
 import com.restful.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,26 @@ public class ProductService {
   private final ProductRepository productRepository;
 
   /**
+   * 商品情報を登録する
+   *
+   * @param product 商品情報
+   * @return 登録した商品情報
+   */
+  public Product registerProduct(Product product){
+    return productRepository.save(product);
+  }
+
+  /**
    * 商品情報を1件取得する
+   * リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
+   *
    * @param id 商品ID
    * @return 商品情報
    */
   public Product getProductById(int id){
-    return productRepository.getById(id);
+    return productRepository
+            .findById(id)
+            .orElseThrow(() -> new ProductNotFoundException("ID：" + id + "の商品は存在しません。"));
   }
 
   /**
@@ -35,16 +50,6 @@ public class ProductService {
    */
   public List<Product> getAllProduct(){
     return productRepository.findAll();
-  }
-
-  /**
-   * 商品情報を登録する
-   *
-   * @param product 商品情報
-   * @return 登録した商品情報
-   */
-  public Product registerProduct(Product product){
-    return productRepository.save(product);
   }
 
   /**
@@ -71,5 +76,13 @@ public class ProductService {
     productRepository.deleteById(id);
   }
 
-
+  /**
+   * 既にDBに登録済みのtitleかどうか判定する
+   *
+   * @param product 商品
+   * @return DBに既に登録済みの商品titleであるならtrue
+   */
+  private boolean existsTitle(Product product){
+    return productRepository.findByTitleEquals(product.getTitle()).isPresent();
+  }
 }
