@@ -27,8 +27,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   protected ResponseEntity<Object> handleExceptionInternal(
           Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request){
-    ErrorResponse errorResponse = new ErrorResponse(status.value(),ex.getMessage());
-    return super.handleExceptionInternal(ex,errorResponse,headers,status,request);
+    ErrorResponse errorResponse = new ErrorResponse(status.value(), ex.getMessage());
+    return super.handleExceptionInternal(ex, errorResponse, headers, status, request);
   }
 
   /**
@@ -40,7 +40,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = ProductNotFoundException.class)
   protected ResponseEntity<Object> handleProductNotFound(ProductNotFoundException ex, WebRequest request){
     HttpStatus status = HttpStatus.NOT_FOUND;
-    ErrorResponse response = new ErrorResponse(status.value(),ex.getMessage());
-    return handleExceptionInternal(ex, response,new HttpHeaders(),status,request);
+    ErrorResponse response = new ErrorResponse(status.value(), ex.getMessage());
+    return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+  }
+
+  /**
+   * 500エラー
+   *
+   * @param ex 例外
+   * @param request リクエスト
+   */
+  @ExceptionHandler(value = Exception.class)
+  protected ResponseEntity<Object> handleAllException(Exception ex, WebRequest request){
+    HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+    ErrorResponse response = new ErrorResponse(status.value(), "サーバー内でエラーが発生しています。");
+    return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 }
