@@ -1,6 +1,7 @@
 package com.restful.api.service;
 
 import com.restful.api.entity.Product;
+import com.restful.api.exception.ProductAlreadyExistsException;
 import com.restful.api.exception.ProductNotFoundException;
 import com.restful.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,9 @@ public class ProductService {
    * @return 登録した商品情報
    */
   public Product registerProduct(Product product){
+    if (existsTitle(product)){
+      throw new ProductAlreadyExistsException("商品名：" + product.getTitle() + "は既に存在しています。");
+    }
     return productRepository.save(product);
   }
 
