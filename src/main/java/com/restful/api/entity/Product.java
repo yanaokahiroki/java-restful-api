@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
  * 扱うデータを定義
  *
  * @author yanaokahiroki
- *
  */
 @Data
 @Entity

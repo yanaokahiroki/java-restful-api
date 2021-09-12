@@ -51,7 +51,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request リクエスト
    */
   @ExceptionHandler(value = ProductAlreadyExistsException.class)
-  protected ResponseEntity<Object> handleProductAlreadyExistsException(ProductAlreadyExistsException ex, WebRequest request){
+  protected ResponseEntity<Object> handleProductAlreadyExistsException(
+          ProductAlreadyExistsException ex, WebRequest request){
     HttpStatus status = HttpStatus.BAD_REQUEST;
     ErrorResponse response = new ErrorResponse(status.value(), ex.getMessage());
     return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);

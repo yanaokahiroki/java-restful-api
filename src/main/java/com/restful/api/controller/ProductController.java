@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
   private final ProductService productService;
 
@@ -29,7 +29,7 @@ public class ProductController {
    */
   @PostMapping
   public ResponseEntity<Product> registerProduct(@RequestBody Product product){
-    return new ResponseEntity<>(productService.registerProduct(product),HttpStatus.CREATED);
+    return new ResponseEntity<>(productService.registerProduct(product), HttpStatus.CREATED);
   }
 
   /**
@@ -50,7 +50,7 @@ public class ProductController {
    */
   @GetMapping
   public ResponseEntity<List<Product>> getAllProduct(){
-    return new ResponseEntity<>(productService.getAllProduct(),HttpStatus.OK);
+    return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
   }
 
   /**
@@ -62,7 +62,7 @@ public class ProductController {
    */
   @PutMapping("/{id}")
   public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product product){
-    return new ResponseEntity<>(productService.updateProduct(id,product),HttpStatus.OK);
+    return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
   }
 
   /**
