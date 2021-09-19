@@ -3,6 +3,7 @@ package com.restful.api.service;
 import com.restful.api.entity.Product;
 import com.restful.api.exception.ProductAlreadyExistsException;
 import com.restful.api.exception.ProductNotFoundException;
+import com.restful.api.form.ProductForm;
 import com.restful.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,17 @@ public class ProductService {
   /**
    * 商品情報を登録する
    *
-   * @param product 商品情報
+   * @param productForm 商品情報
    * @return 登録した商品情報
    */
-  public Product registerProduct(Product product){
-    if (existsTitle(product)){
-      throw new ProductAlreadyExistsException("商品名：" + product.getTitle() + "は既に存在しています。");
+  public Product registerProduct(ProductForm productForm){
+    if (existsTitle(productForm)){
+      throw new ProductAlreadyExistsException("商品名：" + productForm.getTitle() + "は既に存在しています。");
     }
+    Product product = new Product();
+    product.setTitle(productForm.getTitle());
+    product.setBody(productForm.getBody());
+    product.setPrice(productForm.getPrice());
     return productRepository.save(product);
   }
 
@@ -63,7 +68,7 @@ public class ProductService {
    * @param updatedProduct 更新する商品情報
    * @return 更新した商品情報
    */
-  public Product updateProduct(int id,Product updatedProduct){
+  public Product updateProduct(int id, ProductForm updatedProduct){
     Product product = getProductById(id);
     product.setTitle(updatedProduct.getTitle());
     product.setBody(updatedProduct.getBody());
@@ -86,7 +91,7 @@ public class ProductService {
    * @param product 商品
    * @return DBに既に登録済みの商品titleであるならtrue
    */
-  private boolean existsTitle(Product product){
+  private boolean existsTitle(ProductForm product){
     return productRepository.findByTitleEquals(product.getTitle()).isPresent();
   }
 }

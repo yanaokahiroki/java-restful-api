@@ -4,11 +4,15 @@ import com.restful.api.entity.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * API共通例外ハンドラー
@@ -41,6 +45,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
           ProductAlreadyExistsException ex, WebRequest request){
     HttpStatus status = HttpStatus.BAD_REQUEST;
     ErrorResponse response = new ErrorResponse(status.value(), ex.getMessage());
+    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ResponseEntity<Object> handleMethodArgumentNotValid(
+          MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
+    List<String> validatedErrorList =
+            ex
+            .getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .map(fieldError -> fieldError.getField() + "：" + fieldError.getDefaultMessage())
+            .collect(Collectors.toList());
+    ErrorResponse response = new ErrorResponse(status.value(), "バリデーションエラーです。" , validatedErrorList);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
