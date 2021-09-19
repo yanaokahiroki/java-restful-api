@@ -1,6 +1,7 @@
 package com.restful.api.exception;
 
-import com.restful.api.entity.ErrorResponse;
+import com.restful.api.dto.ErrorDetailDto;
+import com.restful.api.dto.ErrorResponseDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = ProductNotFoundException.class)
   public ResponseEntity<Object> handleProductNotFound(ProductNotFoundException ex, WebRequest request){
     HttpStatus status = HttpStatus.NOT_FOUND;
-    ErrorResponse response = new ErrorResponse(status.value(), ex.getMessage());
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), ex.getMessage());
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -44,7 +45,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleProductAlreadyExistsException(
           ProductAlreadyExistsException ex, WebRequest request){
     HttpStatus status = HttpStatus.BAD_REQUEST;
-    ErrorResponse response = new ErrorResponse(status.value(), ex.getMessage());
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), ex.getMessage());
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -54,14 +55,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   public ResponseEntity<Object> handleMethodArgumentNotValid(
           MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-    List<String> validatedErrorList =
+    List<ErrorDetailDto> validatedErrorList =
             ex
             .getBindingResult()
             .getFieldErrors()
             .stream()
-            .map(fieldError -> fieldError.getField() + "：" + fieldError.getDefaultMessage())
+            .map(fieldError -> new ErrorDetailDto(fieldError.getField(),fieldError.getDefaultMessage()))
             .collect(Collectors.toList());
-    ErrorResponse response = new ErrorResponse(status.value(), "バリデーションエラーです。" , validatedErrorList);
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), "バリデーションエラーです。" , validatedErrorList);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -73,7 +74,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   public ResponseEntity<Object> handleNoHandlerFoundException(
           NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-    ErrorResponse response = new ErrorResponse(status.value(), "存在しないURLです。");
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), "存在しないURLです。");
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -86,7 +87,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = Exception.class)
   public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request){
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-    ErrorResponse response = new ErrorResponse(status.value(), "サーバー内でエラーが発生しています。");
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), "サーバー内でエラーが発生しています。");
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 }

@@ -11,16 +11,16 @@ import javax.validation.constraints.*;
  */
 @Data
 public class ProductForm {
-  @NotBlank(message = "必須項目です。")
-  @Size(max = 50, message = "50文字以下で入力してください。")
+  @NotBlank(message = "{product.title.required}")
+  @Size(max = 50, message = "{product.title.max}")
   private String title;
 
-  @NotBlank(message = "必須項目です。")
-  @Size(max = 100, message = "100文字以下で入力してください。")
+  @NotBlank(message = "{product.body.required}")
+  @Size(max = 100, message = "{product.body.max}")
   private String body;
 
-  @NotNull(message = "必須項目です。")
-  @Min(value = 1, message = "1円以上で入力してください。")
-  @Max(value = 1_000_000, message = "100万円以下で入力してください。")
+  @NotNull(message = "{product.price.required}")
+  @Min(value = 1, message = "{product.price.min}")
+  @Max(value = 1_000_000, message = "{product.price.max}")
   private int price;
 }

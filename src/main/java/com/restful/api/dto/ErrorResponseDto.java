@@ -1,4 +1,4 @@
-package com.restful.api.entity;
+package com.restful.api.dto;
 
 import lombok.Data;
 
@@ -10,17 +10,17 @@ import java.util.List;
  * @author yanaokahiroki
  */
 @Data
-public class ErrorResponse {
+public class ErrorResponseDto {
   private int status;
   private String message;
-  private List<String> errorList;
+  private List<ErrorDetailDto> errorList;
 
-  public ErrorResponse(int status, String message){
+  public ErrorResponseDto(int status, String message){
     this.status = status;
     this.message = message;
   }
 
-  public ErrorResponse(int status, String message, List<String> errorList){
+  public ErrorResponseDto(int status, String message, List<ErrorDetailDto> errorList){
     this.status = status;
     this.message = message;
     this.errorList = errorList;
