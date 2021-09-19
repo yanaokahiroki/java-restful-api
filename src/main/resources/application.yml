@@ -30,3 +30,17 @@ spring:
   web:
     resources:
       add-mappings: false
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type:
+          EnumType: trace
+          descriptor:
+            sql:
+              BasicBinder: trace
