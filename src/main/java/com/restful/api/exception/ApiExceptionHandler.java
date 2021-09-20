@@ -2,6 +2,8 @@ package com.restful.api.exception;
 
 import com.restful.api.dto.ErrorDetailDto;
 import com.restful.api.dto.ErrorResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +23,11 @@ import java.util.stream.Collectors;
  *
  * @author yanaokahiroki
  */
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+  private final MessageSource messageSource;
+
   /**
    * リクエストに対して該当する商品が存在しない場合の例外ハンドラー
    *
@@ -55,6 +61,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   public ResponseEntity<Object> handleMethodArgumentNotValid(
           MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
+    // 捕捉したバリデーション例外を取得してその1つ1つをDTOに詰めていく
     List<ErrorDetailDto> validatedErrorList =
             ex
             .getBindingResult()
@@ -62,7 +69,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .stream()
             .map(fieldError -> new ErrorDetailDto(fieldError.getField(),fieldError.getDefaultMessage()))
             .collect(Collectors.toList());
-    ErrorResponseDto response = new ErrorResponseDto(status.value(), "バリデーションエラーです。" , validatedErrorList);
+    String message = messageSource.getMessage("error.validate", null, Locale.JAPAN);
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), message, validatedErrorList);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -74,7 +82,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   public ResponseEntity<Object> handleNoHandlerFoundException(
           NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-    ErrorResponseDto response = new ErrorResponseDto(status.value(), "存在しないURLです。");
+    String message = messageSource.getMessage("error.notFound", null, Locale.JAPAN);
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
@@ -87,7 +96,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = Exception.class)
   public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request){
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-    ErrorResponseDto response = new ErrorResponseDto(status.value(), "サーバー内でエラーが発生しています。");
+    String message = messageSource.getMessage("error.internal", null, Locale.JAPAN);
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 }
