@@ -15,7 +15,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -69,7 +68,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .stream()
             .map(fieldError -> new ErrorDetailDto(fieldError.getField(),fieldError.getDefaultMessage()))
             .collect(Collectors.toList());
-    String message = messageSource.getMessage("error.validate", null, Locale.JAPAN);
+    String message = messageSource.getMessage("error.validate", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message, validatedErrorList);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
@@ -82,7 +81,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @Override
   public ResponseEntity<Object> handleNoHandlerFoundException(
           NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-    String message = messageSource.getMessage("error.notFound", null, Locale.JAPAN);
+    String message = messageSource.getMessage("error.notFound", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
@@ -96,7 +95,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(value = Exception.class)
   public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request){
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-    String message = messageSource.getMessage("error.internal", null, Locale.JAPAN);
+    String message = messageSource.getMessage("error.internal", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
