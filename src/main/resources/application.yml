@@ -33,6 +33,10 @@ spring:
   output:
     ansi:
       enabled: always
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    cache-duration: -1
 
 logging:
   level:
