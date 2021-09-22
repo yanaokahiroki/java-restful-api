@@ -5,8 +5,8 @@ package com.restful.api.exception;
  *
  * @author yanaokahiroki
  */
-public class ProductAlreadyExistsException extends RuntimeException{
-  public ProductAlreadyExistsException(String message){
+public class ProductAlreadyExistsException extends RuntimeException {
+  public ProductAlreadyExistsException(String message) {
     super(message);
   }
 }

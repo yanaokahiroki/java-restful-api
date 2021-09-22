@@ -5,8 +5,8 @@ package com.restful.api.exception;
  *
  * @author yanaokahiroki
  */
-public class ProductNotFoundException extends RuntimeException{
-  public ProductNotFoundException(String message){
+public class ProductNotFoundException extends RuntimeException {
+  public ProductNotFoundException(String message) {
     super(message);
   }
 }

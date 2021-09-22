@@ -34,7 +34,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request リクエスト
    */
   @ExceptionHandler(value = ProductNotFoundException.class)
-  public ResponseEntity<Object> handleProductNotFound(ProductNotFoundException ex, WebRequest request){
+  public ResponseEntity<Object> handleProductNotFound(
+      ProductNotFoundException ex, WebRequest request) {
     HttpStatus status = HttpStatus.NOT_FOUND;
     ErrorResponseDto response = new ErrorResponseDto(status.value(), ex.getMessage());
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
@@ -48,25 +49,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(value = ProductAlreadyExistsException.class)
   public ResponseEntity<Object> handleProductAlreadyExistsException(
-          ProductAlreadyExistsException ex, WebRequest request){
+      ProductAlreadyExistsException ex, WebRequest request) {
     HttpStatus status = HttpStatus.BAD_REQUEST;
     ErrorResponseDto response = new ErrorResponseDto(status.value(), ex.getMessage());
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleMethodArgumentNotValid(
-          MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
+      MethodArgumentNotValidException ex,
+      HttpHeaders headers,
+      HttpStatus status,
+      WebRequest request) {
     // 捕捉したバリデーション例外を取得してその1つ1つをDTOに詰めていく
     List<ErrorDetailDto> validatedErrorList =
-            ex
-            .getBindingResult()
-            .getFieldErrors()
-            .stream()
-            .map(fieldError -> new ErrorDetailDto(fieldError.getField(),fieldError.getDefaultMessage()))
+        ex.getBindingResult().getFieldErrors().stream()
+            .map(
+                fieldError ->
+                    new ErrorDetailDto(fieldError.getField(), fieldError.getDefaultMessage()))
             .collect(Collectors.toList());
     String message = messageSource.getMessage("error.validate", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message, validatedErrorList);
@@ -76,11 +77,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   /**
    * 404エラー
    *
-   * {@inheritDoc}
+   * <p>{@inheritDoc}
    */
   @Override
   public ResponseEntity<Object> handleNoHandlerFoundException(
-          NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
+      NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.notFound", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
@@ -93,7 +94,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request リクエスト
    */
   @ExceptionHandler(value = Exception.class)
-  public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request){
+  public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
     String message = messageSource.getMessage("error.internal", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);

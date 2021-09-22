@@ -16,8 +16,12 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 public class ValidationMessageConfiguration {
   private final MessageSource messageSource;
 
+  /**
+   * バリデーションメッセージのプロパティファイルを
+   * デフォルトのValidateMessageSourceからmessageSourceに変更しBeanとして定義
+   */
   @Bean
-  public LocalValidatorFactoryBean validator(){
+  public LocalValidatorFactoryBean validator() {
     LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
     localValidatorFactoryBean.setValidationMessageSource(messageSource);
     return localValidatorFactoryBean;

@@ -12,8 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 商品情報Controller
- * クライアントリクエスト、レスポンスを処理
+ * 商品情報Controller クライアントリクエスト、レスポンスを処理
  *
  * @author yanaokahiroki
  */
@@ -30,7 +29,7 @@ public class ProductController {
    * @return 登録した商品情報
    */
   @PostMapping
-  public ResponseEntity<Product> registerProduct(@Valid @RequestBody ProductForm product){
+  public ResponseEntity<Product> registerProduct(@Valid @RequestBody ProductForm product) {
     return new ResponseEntity<>(productService.registerProduct(product), HttpStatus.CREATED);
   }
 
@@ -41,7 +40,7 @@ public class ProductController {
    * @return 商品情報
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProduct(@PathVariable int id){
+  public ResponseEntity<Product> getProduct(@PathVariable int id) {
     return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
   }
 
@@ -51,7 +50,7 @@ public class ProductController {
    * @return 商品情報List
    */
   @GetMapping
-  public ResponseEntity<List<Product>> getAllProduct(){
+  public ResponseEntity<List<Product>> getAllProduct() {
     return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
   }
 
@@ -63,7 +62,8 @@ public class ProductController {
    * @return 更新した商品情報
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody ProductForm product){
+  public ResponseEntity<Product> updateProduct(
+      @PathVariable int id, @RequestBody ProductForm product) {
     return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
   }
 
@@ -74,7 +74,7 @@ public class ProductController {
    */
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteProduct(@PathVariable int id){
+  public void deleteProduct(@PathVariable int id) {
     productService.deleteProduct(id);
   }
 }

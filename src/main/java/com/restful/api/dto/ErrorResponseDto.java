@@ -15,12 +15,25 @@ public class ErrorResponseDto {
   private String message;
   private List<ErrorDetailDto> errorList;
 
-  public ErrorResponseDto(int status, String message){
+  /**
+   * エラーレスポンスコンストラクタ
+   *
+   * @param status HTTPステータス
+   * @param message レスポンスメッセージ
+   */
+  public ErrorResponseDto(int status, String message) {
     this.status = status;
     this.message = message;
   }
 
-  public ErrorResponseDto(int status, String message, List<ErrorDetailDto> errorList){
+  /**
+   * エラーレスポンスコンストラクタ
+   *
+   * @param status HTTPステータス
+   * @param message レスポンスメッセージ
+   * @param errorList エラー詳細List
+   */
+  public ErrorResponseDto(int status, String message, List<ErrorDetailDto> errorList) {
     this.status = status;
     this.message = message;
     this.errorList = errorList;

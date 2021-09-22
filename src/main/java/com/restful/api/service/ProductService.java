@@ -28,8 +28,8 @@ public class ProductService {
    * @param productForm 商品情報
    * @return 登録した商品情報
    */
-  public Product registerProduct(ProductForm productForm){
-    if (existsTitle(productForm)){
+  public Product registerProduct(ProductForm productForm) {
+    if (existsTitle(productForm)) {
       throw new ProductAlreadyExistsException("商品名：" + productForm.getTitle() + "は既に存在しています。");
     }
     Product product = new Product();
@@ -40,16 +40,15 @@ public class ProductService {
   }
 
   /**
-   * 商品情報を1件取得する
-   * リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
+   * 商品情報を1件取得する リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
    *
    * @param id 商品ID
    * @return 商品情報
    */
-  public Product getProductById(int id){
+  public Product getProductById(int id) {
     return productRepository
-            .findById(id)
-            .orElseThrow(() -> new ProductNotFoundException("ID：" + id + "の商品は存在しません。"));
+        .findById(id)
+        .orElseThrow(() -> new ProductNotFoundException("ID：" + id + "の商品は存在しません。"));
   }
 
   /**
@@ -57,7 +56,7 @@ public class ProductService {
    *
    * @return 商品情報List
    */
-  public List<Product> getAllProduct(){
+  public List<Product> getAllProduct() {
     return productRepository.findAll();
   }
 
@@ -68,7 +67,7 @@ public class ProductService {
    * @param updatedProduct 更新する商品情報
    * @return 更新した商品情報
    */
-  public Product updateProduct(int id, ProductForm updatedProduct){
+  public Product updateProduct(int id, ProductForm updatedProduct) {
     Product product = getProductById(id);
     product.setTitle(updatedProduct.getTitle());
     product.setBody(updatedProduct.getBody());
@@ -81,7 +80,7 @@ public class ProductService {
    *
    * @param id 商品ID
    */
-  public void deleteProduct(int id){
+  public void deleteProduct(int id) {
     productRepository.deleteById(id);
   }
 
@@ -91,7 +90,7 @@ public class ProductService {
    * @param product 商品
    * @return DBに既に登録済みの商品titleであるならtrue
    */
-  private boolean existsTitle(ProductForm product){
+  private boolean existsTitle(ProductForm product) {
     return productRepository.findByTitleEquals(product.getTitle()).isPresent();
   }
 }
