@@ -6,10 +6,12 @@ import com.restful.api.exception.ProductNotFoundException;
 import com.restful.api.form.ProductForm;
 import com.restful.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 商品情報に関するビジネスロジック
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
   private final ProductRepository productRepository;
+  private final MessageSource messageSource;
 
   /**
    * 商品情報を登録する
@@ -28,9 +31,11 @@ public class ProductService {
    * @param productForm 商品情報
    * @return 登録した商品情報
    */
-  public Product registerProduct(ProductForm productForm) {
+  public Product registerProduct(ProductForm productForm, Locale locale) {
     if (existsTitle(productForm)) {
-      throw new ProductAlreadyExistsException("商品名：" + productForm.getTitle() + "は既に存在しています。");
+      throw new ProductAlreadyExistsException(
+          messageSource.getMessage(
+              "error.product.already.exist", new String[] {productForm.getTitle()}, locale));
     }
     Product product = new Product();
     product.setTitle(productForm.getTitle());
@@ -45,10 +50,14 @@ public class ProductService {
    * @param id 商品ID
    * @return 商品情報
    */
-  public Product getProductById(int id) {
+  public Product getProductById(int id, Locale locale) {
     return productRepository
         .findById(id)
-        .orElseThrow(() -> new ProductNotFoundException("ID：" + id + "の商品は存在しません。"));
+        .orElseThrow(
+            () ->
+                new ProductNotFoundException(
+                    messageSource.getMessage(
+                        "error.product.notFound", new String[] {String.valueOf(id)}, locale)));
   }
 
   /**
@@ -67,8 +76,8 @@ public class ProductService {
    * @param updatedProduct 更新する商品情報
    * @return 更新した商品情報
    */
-  public Product updateProduct(int id, ProductForm updatedProduct) {
-    Product product = getProductById(id);
+  public Product updateProduct(int id, ProductForm updatedProduct, Locale locale) {
+    Product product = getProductById(id, locale);
     product.setTitle(updatedProduct.getTitle());
     product.setBody(updatedProduct.getBody());
     product.setPrice(updatedProduct.getPrice());

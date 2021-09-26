@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 商品情報Controller クライアントリクエスト、レスポンスを処理
@@ -29,8 +30,10 @@ public class ProductController {
    * @return 登録した商品情報
    */
   @PostMapping
-  public ResponseEntity<Product> registerProduct(@Valid @RequestBody ProductForm product) {
-    return new ResponseEntity<>(productService.registerProduct(product), HttpStatus.CREATED);
+  public ResponseEntity<Product> registerProduct(
+      @Valid @RequestBody ProductForm product, Locale locale) {
+    return new ResponseEntity<>(
+        productService.registerProduct(product, locale), HttpStatus.CREATED);
   }
 
   /**
@@ -40,8 +43,8 @@ public class ProductController {
    * @return 商品情報
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProduct(@PathVariable int id) {
-    return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+  public ResponseEntity<Product> getProduct(@PathVariable int id, Locale locale) {
+    return new ResponseEntity<>(productService.getProductById(id, locale), HttpStatus.OK);
   }
 
   /**
@@ -63,8 +66,8 @@ public class ProductController {
    */
   @PutMapping("/{id}")
   public ResponseEntity<Product> updateProduct(
-      @PathVariable int id, @RequestBody ProductForm product) {
-    return new ResponseEntity<>(productService.updateProduct(id, product), HttpStatus.OK);
+      @PathVariable int id, @RequestBody ProductForm product, Locale locale) {
+    return new ResponseEntity<>(productService.updateProduct(id, product, locale), HttpStatus.OK);
   }
 
   /**
