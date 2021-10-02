@@ -4,6 +4,7 @@ import com.restful.api.entity.Product;
 import com.restful.api.form.ProductForm;
 import com.restful.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +49,19 @@ public class ProductController {
   }
 
   /**
-   * 商品情報を全件取得する
+   * 商品情報を商品名で検索する
+   * クエリパラメータが空の場合は商品情報を全件取得する
    *
+   * @param keyword キーワード
    * @return 商品情報List
    */
   @GetMapping
-  public ResponseEntity<List<Product>> getAllProduct() {
-    return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
+  public ResponseEntity<List<Product>> searchProduct(
+      @RequestParam(name = "keyword", required = false) String keyword) {
+    if (StringUtils.isBlank(keyword)) {
+      return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(productService.getProductByTitle(keyword), HttpStatus.OK);
   }
 
   /**

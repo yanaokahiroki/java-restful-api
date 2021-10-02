@@ -70,6 +70,16 @@ public class ProductService {
   }
 
   /**
+   * 商品情報を商品名で取得する
+   *
+   * @param title 商品名
+   * @return titleに部分一致する商品情報List
+   */
+  public List<Product> getProductByTitle(String title) {
+    return productRepository.findProductByTitleContains(title);
+  }
+
+  /**
    * 商品情報を更新する
    *
    * @param id 商品ID
