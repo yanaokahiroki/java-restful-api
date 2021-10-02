@@ -38,6 +38,18 @@ spring:
     encoding: UTF-8
     cache-duration: -1
 
+management:
+  endpoints:
+    web:
+      base-path: /admin
+      exposure:
+        include:
+          - health
+          - info
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
     org:
