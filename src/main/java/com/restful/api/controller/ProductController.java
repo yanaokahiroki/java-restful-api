@@ -1,5 +1,6 @@
 package com.restful.api.controller;
 
+import com.restful.api.dto.ProductDto;
 import com.restful.api.entity.Product;
 import com.restful.api.form.ProductForm;
 import com.restful.api.service.ProductService;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * 商品情報Controller クライアントリクエスト、レスポンスを処理
+ * 商品情報Controller
+ * クライアントリクエスト、レスポンスを処理
  *
  * @author yanaokahiroki
  */
@@ -28,10 +30,11 @@ public class ProductController {
    * 商品情報を登録する
    *
    * @param product 商品情報
+   * @param locale 国
    * @return 登録した商品情報
    */
   @PostMapping
-  public ResponseEntity<Product> registerProduct(
+  public ResponseEntity<ProductDto> registerProduct(
       @Valid @RequestBody ProductForm product, Locale locale) {
     return new ResponseEntity<>(
         productService.registerProduct(product, locale), HttpStatus.CREATED);
@@ -41,10 +44,11 @@ public class ProductController {
    * 商品情報を1件取得する
    *
    * @param id 商品ID
+   * @param locale 国
    * @return 商品情報
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProduct(@PathVariable int id, Locale locale) {
+  public ResponseEntity<ProductDto> getProduct(@PathVariable int id, Locale locale) {
     return new ResponseEntity<>(productService.getProductById(id, locale), HttpStatus.OK);
   }
 
@@ -56,7 +60,7 @@ public class ProductController {
    * @return 商品情報List
    */
   @GetMapping
-  public ResponseEntity<List<Product>> searchProduct(
+  public ResponseEntity<List<ProductDto>> searchProduct(
       @RequestParam(name = "keyword", required = false) String keyword) {
     if (StringUtils.isBlank(keyword)) {
       return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
@@ -69,10 +73,11 @@ public class ProductController {
    *
    * @param id 商品ID
    * @param product 更新する商品情報
+   * @param locale 国
    * @return 更新した商品情報
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Product> updateProduct(
+  public ResponseEntity<ProductDto> updateProduct(
       @PathVariable int id, @RequestBody ProductForm product, Locale locale) {
     return new ResponseEntity<>(productService.updateProduct(id, product, locale), HttpStatus.OK);
   }

@@ -1,5 +1,6 @@
 package com.restful.api.service;
 
+import com.restful.api.dto.ProductDto;
 import com.restful.api.entity.Product;
 import com.restful.api.exception.ProductAlreadyExistsException;
 import com.restful.api.exception.ProductNotFoundException;
@@ -29,9 +30,10 @@ public class ProductService {
    * 商品情報を登録する
    *
    * @param productForm 商品情報
+   * @param locale 国
    * @return 登録した商品情報
    */
-  public Product registerProduct(ProductForm productForm, Locale locale) {
+  public ProductDto registerProduct(ProductForm productForm, Locale locale) {
     if (existsTitle(productForm)) {
       throw new ProductAlreadyExistsException(
           messageSource.getMessage(
@@ -41,23 +43,21 @@ public class ProductService {
     product.setTitle(productForm.getTitle());
     product.setBody(productForm.getBody());
     product.setPrice(productForm.getPrice());
-    return productRepository.save(product);
+    Product registeredProduct = productRepository.save(product);
+    return new ProductDto(registeredProduct);
   }
 
   /**
-   * 商品情報を1件取得する リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
+   * 商品情報を1件取得する
+   * リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
    *
    * @param id 商品ID
+   * @param locale 国
    * @return 商品情報
    */
-  public Product getProductById(int id, Locale locale) {
-    return productRepository
-        .findById(id)
-        .orElseThrow(
-            () ->
-                new ProductNotFoundException(
-                    messageSource.getMessage(
-                        "error.product.notFound", new String[] {String.valueOf(id)}, locale)));
+  public ProductDto getProductById(int id, Locale locale) {
+    Product product = findProductById(id, locale);
+    return new ProductDto(product);
   }
 
   /**
@@ -65,8 +65,9 @@ public class ProductService {
    *
    * @return 商品情報List
    */
-  public List<Product> getAllProduct() {
-    return productRepository.findAll();
+  public List<ProductDto> getAllProduct() {
+    List<Product> productList = productRepository.findAll();
+    return productList.stream().map(ProductDto::new).toList();
   }
 
   /**
@@ -75,23 +76,26 @@ public class ProductService {
    * @param title 商品名
    * @return titleに部分一致する商品情報List
    */
-  public List<Product> getProductByTitle(String title) {
-    return productRepository.findProductByTitleContains(title);
+  public List<ProductDto> getProductByTitle(String title) {
+    List<Product> productList = productRepository.findProductByTitleContains(title);
+    return productList.stream().map(ProductDto::new).toList();
   }
 
   /**
    * 商品情報を更新する
    *
    * @param id 商品ID
-   * @param updatedProduct 更新する商品情報
+   * @param targetProduct 更新する商品情報
+   * @param locale 国
    * @return 更新した商品情報
    */
-  public Product updateProduct(int id, ProductForm updatedProduct, Locale locale) {
-    Product product = getProductById(id, locale);
-    product.setTitle(updatedProduct.getTitle());
-    product.setBody(updatedProduct.getBody());
-    product.setPrice(updatedProduct.getPrice());
-    return productRepository.save(product);
+  public ProductDto updateProduct(int id, ProductForm targetProduct, Locale locale) {
+    Product product = findProductById(id, locale);
+    product.setTitle(targetProduct.getTitle());
+    product.setBody(targetProduct.getBody());
+    product.setPrice(targetProduct.getPrice());
+    Product updatedProduct = productRepository.save(product);
+    return new ProductDto(updatedProduct);
   }
 
   /**
@@ -101,6 +105,23 @@ public class ProductService {
    */
   public void deleteProduct(int id) {
     productRepository.deleteById(id);
+  }
+
+  /**
+   * 商品IDで商品を取得する
+   *
+   * @param id 商品ID
+   * @param locale 国
+   * @return 商品情報エンティティ
+   */
+  private Product findProductById(int id, Locale locale) {
+    return productRepository
+        .findById(id)
+        .orElseThrow(
+            () ->
+                new ProductNotFoundException(
+                    messageSource.getMessage(
+                        "error.product.notFound", new String[] {String.valueOf(id)}, locale)));
   }
 
   /**
