@@ -1,0 +1,335 @@
+openapi: 3.0.3
+info:
+  description: "商品情報を管理するAPIです。"
+  version: 1.0.0
+  title: "java-api"
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: "http://localhost:8080/api/v1"
+    description: "ローカルサーバ"
+tags:
+  - name: "Product"
+    description: "商品の情報を管理する"
+paths:
+  /products:
+    post:
+      tags:
+        - "Product"
+      summary: "商品情報の登録"
+      description: "入力した情報で商品を登録する。"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductForm'
+      responses:
+        '201':
+          description: 'Created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+                
+        '400':
+          description: 'Validation Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodArgumentNotValidException'
+                
+        '500':
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+
+    get:
+      tags: 
+        - "Product"
+      summary: "商品情報の取得(複数件)"
+      description: "商品名を指定しその商品名に部分一致する商品情報を取得する。パラメータの指定がない場合や部分一致する商品情報が存在しない場合、全件取得する。"
+      parameters: 
+        - name: "keyword"
+          in: query
+          description: "検索したい商品名"
+          schema:
+            type: string
+            maxLength: 100
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+
+
+  /products/{id}:
+    get:
+      tags: 
+        - "Product"
+      summary: "商品情報の取得(1件)"
+      description: "取得したい商品のIDを指定し、その商品情報を取得する。"
+      parameters: 
+        - name: id
+          in: path
+          description: "検索したい商品のID"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+        
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+
+    put:
+      tags: 
+        - "Product"
+      summary: "商品情報の変更"
+      description: "変更したい商品のIDを指定し、その商品情報を変更する。"
+      parameters: 
+        - name: id
+          in: path
+          description: "検索したい商品のID"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+                
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+
+    delete:
+      tags: 
+        - "Product"
+      summary: "商品情報の削除"
+      description: "削除したい商品のIDを指定し、その商品情報を削除する。"
+      parameters: 
+        - name: id
+          in: path
+          description: "検索したい商品のID"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: "No Content"
+
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+        
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+        
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title: 
+          type: string
+          maxLength: 50
+        body:
+          type: string
+          maxLength: 100
+        price:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      example: 
+        id: 1
+        title: "NIKE daybreak"
+        body: "1979年に登場したランナー用シューズ。"
+        price: 12000
+        createdAt: 2021-10-05 19:00:00
+        updatedAt: 2021-10-05 19:00:00
+        
+    ProductList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+      example: 
+        - id: 1
+          title: "NIKE daybreak"
+          body: "1979年に登場したランナー用シューズ。"
+          price: 12000
+          createdAt: 2021-10-05 19:00:00
+          updatedAt: 2021-10-05 19:00:00
+        - id: 2
+          title: "NIKE Air Tailwind"
+          body: "NIKEで初めてAIRを搭載したランナー用シューズ"
+          price: 12000
+          createdAt: 2021-10-05 19:00:00
+          updatedAt: 2021-10-05 19:00:00
+
+    ProductForm:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 50
+        body:
+          type: string
+          maxLength: 100
+        price:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+      example: 
+        title: "NIKE daybreak"
+        body: "1979年に登場したランナー用シューズ。"
+        price: 12000
+
+    
+    ErrorList:
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            example: "title"
+          detail:
+            type: string
+            example: "商品名を入力してください。"
+  
+        
+    ProductNotFoundException:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "ID:xxの商品は存在しません。"
+          
+    ProductAlreadyExistsException:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "xxはすでに存在しています。"
+
+    MethodArgumentNotValidException:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "バリデーションエラーです。"
+        errorList:
+          $ref: "#/components/schemas/ErrorList"
+
+    NotFoundException:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "存在しないURLです。"
+
+    InternalServerException:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 500
+        message:
+          type: string
+          example: "サーバー内でエラーが発生しています。"
