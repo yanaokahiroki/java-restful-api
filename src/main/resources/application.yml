@@ -11,7 +11,7 @@ spring:
     database: mysql
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   sql:
     init:
       encoding: UTF-8
@@ -19,9 +19,9 @@ spring:
       schema-locations: classpath:schema.sql
   #      data-locations: classpath:data.sql
   jackson:
-    default-property-inclusion: non_null
+    default-property-inclusion: non-null
     serialization:
-      indent_output: true
+      indent-output: true
   mvc:
     hiddenmethod:
       filter:
