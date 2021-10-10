@@ -1,7 +1,6 @@
 package com.restful.api.controller;
 
 import com.restful.api.dto.ProductDto;
-import com.restful.api.entity.Product;
 import com.restful.api.form.ProductForm;
 import com.restful.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
