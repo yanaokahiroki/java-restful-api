@@ -22,7 +22,7 @@ jobs:
         run: npm install -g redoc-cli
 
       - name: build openAPI file # OpenAPIの定義をHTMLに変換
-        run: redoc-cli bundle ./swagger.yml # プロジェクトのディレクトリに合わせて変更してください。
+        run: redoc-cli bundle swagger.yml # プロジェクトのディレクトリに合わせて変更してください。
 
       - name: Output file contents # 問題があった場合に確認するために中身を出力
         run: cat ./redoc-static.html
