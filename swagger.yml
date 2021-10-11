@@ -41,7 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalServerErrorResponse'
+                $ref: '#/components/schemas/InternalServerException'
 
     get:
       tags: 
@@ -68,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalServerErrorResponse'
+                $ref: '#/components/schemas/InternalServerException'
 
 
   /products/{id}:
@@ -93,26 +93,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
         
-        "400":
-          description: "Bad Request"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestErrorResponse'
-        
         "404":
           description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotFoundErrorResponse'
+                $ref: '#/components/schemas/NotFoundException'
         
         "500":
           description: "Internal Server Error"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalServerErrorResponse'
+                $ref: '#/components/schemas/InternalServerException'
 
     put:
       tags: 
@@ -134,27 +127,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-
-        "400":
-          description: "Bad Request"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestErrorResponse'
                 
         "404":
           description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotFoundErrorResponse'
+                $ref: '#/components/schemas/NotFoundException'
 
         "500":
           description: "Internal Server Error"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalServerErrorResponse'
+                $ref: '#/components/schemas/InternalServerException'
 
     delete:
       tags: 
@@ -172,27 +158,20 @@ paths:
       responses:
         "204":
           description: "No Content"
-
-        "400":
-          description: "Bad Request"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestErrorResponse'
         
         "404":
           description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotFoundErrorResponse'
+                $ref: '#/components/schemas/NotFoundException'
         
         "500":
           description: "Internal Server Error"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalServerErrorResponse'
+                $ref: '#/components/schemas/InternalServerException'
 
 
 components:

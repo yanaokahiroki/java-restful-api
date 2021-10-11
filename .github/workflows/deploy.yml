@@ -24,13 +24,13 @@ jobs:
         run: npm install -g redoc-cli
 
       - name: build openAPI file # OpenAPIの定義をHTMLに変換
-        run: redoc-cli bundle swagger.yml # プロジェクトのディレクトリに合わせて変更してください。
+        run: redoc-cli bundle swagger.yml -o index.html # プロジェクトのディレクトリに合わせて変更してください。
 
       # - name: Output file contents # 問題があった場合に確認するために中身を出力
       #   run: cat ./redoc-static.html
 
       - name: Deploy to netlify
-        run: npx netlify-cli deploy --dir=./redoc-static.html
+        run: npx netlify-cli deploy --dir=./index.html
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
