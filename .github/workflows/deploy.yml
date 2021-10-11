@@ -18,7 +18,7 @@ jobs:
       - name: node setting # Redocでnpmを使うのでNodeの設定
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 12.x
 
       - name: install redoc # Redocのインストール
         run: npm install -g redoc-cli
@@ -26,8 +26,8 @@ jobs:
       - name: build openAPI file # OpenAPIの定義をHTMLに変換
         run: redoc-cli bundle swagger.yml # プロジェクトのディレクトリに合わせて変更してください。
 
-      - name: Output file contents # 問題があった場合に確認するために中身を出力
-        run: cat ./redoc-static.html
+      # - name: Output file contents # 問題があった場合に確認するために中身を出力
+      #   run: cat ./redoc-static.html
 
       - name: Deploy to netlify
         run: npx netlify-cli deploy --dir=./redoc-static.html
