@@ -1,0 +1,36 @@
+name: OpenAPI Docs Build and Deploy to Netlify
+
+on:
+  push:
+    paths:
+      - ./swagger.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["14.18.0"]
+    steps:
+      - name: Checkout # 最新コードの取得
+        uses: actions/checkout@v2
+
+      - name: node setting # Redocでnpmを使うのでNodeの設定
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: install redoc # Redocのインストール
+        run: npm install -g redoc-cli
+
+      - name: build openAPI file # OpenAPIの定義をHTMLに変換
+        run: redoc-cli bundle ./swagger.yml # プロジェクトのディレクトリに合わせて変更してください。
+
+      - name: Output file contents # 問題があった場合に確認するために中身を出力
+        run: cat ./redoc-static.html
+
+      - name: Deploy to netlify
+        run: npx netlify-cli deploy --dir=./redoc-static.html
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
