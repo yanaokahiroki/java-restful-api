@@ -2,8 +2,10 @@ name: OpenAPI Docs Build and Deploy to Netlify
 
 on:
   push:
-    paths:
-      - swagger.yml
+    branches:
+      - main
+    # paths:
+    #   - swagger.yml
 
 jobs:
   build:
