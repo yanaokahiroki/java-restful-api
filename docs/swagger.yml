@@ -80,7 +80,7 @@ paths:
       parameters: 
         - name: id
           in: path
-          description: "検索したい商品のID"
+          description: "商品のID"
           required: true
           schema:
             type: integer
