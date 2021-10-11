@@ -2,10 +2,8 @@ name: OpenAPI Docs Build and Deploy to Netlify
 
 on:
   push:
-    branches:
-      - main
-    # paths:
-    #   - swagger.yml
+    paths:
+      - ./docs/swagger.yml
 
 jobs:
   build:
@@ -26,8 +24,8 @@ jobs:
       - name: build openAPI file # OpenAPIの定義をHTMLに変換
         run: redoc-cli bundle ./docs/swagger.yml -o index.html # プロジェクトのディレクトリに合わせて変更してください。
 
-      # - name: Output file contents # 問題があった場合に確認するために中身を出力
-      #   run: cat ./redoc-static.html
+      - name: Output file contents # 問題があった場合に確認するために中身を出力
+        run: cat ./docs/index.html
 
       - name: Deploy to netlify
         run: npx netlify-cli deploy --dir=./docs
