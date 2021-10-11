@@ -10,22 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout # 最新コードの取得
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: node setting # Redocでnpmを使うのでNodeの設定
+      - name: node setting
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
 
-      - name: install redoc # Redocのインストール
+      - name: install redoc
         run: npm install -g redoc-cli
 
-      - name: build openAPI file # OpenAPIの定義をHTMLに変換
-        run: redoc-cli bundle ./docs/swagger.yml -o index.html # プロジェクトのディレクトリに合わせて変更してください。
-
-      - name: Output file contents # 問題があった場合に確認するために中身を出力
-        run: cat ./docs/index.html
+      - name: build openAPI file
+        run: redoc-cli bundle ./docs/swagger.yml -o ./docs/index.html
 
       - name: Deploy to netlify
         run: npx netlify-cli deploy --dir=./docs
