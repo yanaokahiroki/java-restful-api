@@ -3,14 +3,12 @@ name: OpenAPI Docs Build and Deploy to Netlify
 on:
   push:
     paths:
-      - ./swagger.yml
+      - swagger.yml
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["14.18.0"]
+
     steps:
       - name: Checkout # 最新コードの取得
         uses: actions/checkout@v2
@@ -18,7 +16,7 @@ jobs:
       - name: node setting # Redocでnpmを使うのでNodeの設定
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 14.x
 
       - name: install redoc # Redocのインストール
         run: npm install -g redoc-cli
