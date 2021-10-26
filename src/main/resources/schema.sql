@@ -6,4 +6,4 @@ create table if not exists products
     price int unsigned not null,
     created_at datetime not null default current_timestamp,
     updated_at datetime not null default current_timestamp on update current_timestamp
-) engine = innodb char set = utf8mb4;
+) engine = innodb charset = utf8mb4;
