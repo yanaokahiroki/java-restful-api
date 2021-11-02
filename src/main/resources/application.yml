@@ -37,6 +37,10 @@ spring:
     basename: i18n/messages
     encoding: UTF-8
     cache-duration: -1
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
 
 management:
   endpoints:
