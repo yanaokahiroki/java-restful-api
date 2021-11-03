@@ -13,12 +13,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * CSVファイル関連コントローラー
+ * 
+ * @author yanaokahiroki
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/csv")
 public class CsvController {
   private final CsvService csvService;
 
+  /**
+   * CSVファイルをリクエスト時に送信することで直接DBへ保存する
+   * 
+   * @param multipartFile CSVファイル
+   * @throws HttpMediaTypeNotSupportedException CSVファイル以外をパラメータに指定した場合の例外
+   */
   @PostMapping("/upload")
   public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile multipartFile) throws HttpMediaTypeNotSupportedException {
     String message = "";
