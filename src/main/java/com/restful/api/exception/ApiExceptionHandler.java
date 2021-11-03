@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -266,6 +267,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       HttpStatus status,
       WebRequest request){
     String message = messageSource.getMessage("error.asyncRequestTimeout", null, request.getLocale());
+    ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
+    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+  }
+
+  /**
+   * CSVファイルのファイル超過した場合の例外ハンドラー
+   * 
+   * @param ex 例外
+   * @param request リクエスト
+   */
+  @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+  public ResponseEntity<Object> handleMaxUploadSizeExceededException(
+      MaxUploadSizeExceededException ex,
+      HttpHeaders headers,
+      HttpStatus status,
+      WebRequest request) {
+    String message = messageSource.getMessage("error.maxSizeExceeded", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
