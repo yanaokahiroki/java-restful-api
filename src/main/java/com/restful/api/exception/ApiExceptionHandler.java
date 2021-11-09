@@ -277,7 +277,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex 例外
    * @param request リクエスト
    */
-  @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
   public ResponseEntity<Object> handleMaxUploadSizeExceededException(
       MaxUploadSizeExceededException ex,
       HttpHeaders headers,
@@ -285,7 +285,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       WebRequest request) {
     String message = messageSource.getMessage("error.maxSizeExceeded", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /**
