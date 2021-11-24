@@ -48,8 +48,7 @@ public class ProductService {
   }
 
   /**
-   * 商品情報を1件取得する
-   * リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
+   * 商品情報を1件取得する リクエストされた商品IDの商品がDBに存在しない場合には例外をスロー
    *
    * @param id 商品ID
    * @param locale 国

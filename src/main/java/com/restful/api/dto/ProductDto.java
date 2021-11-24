@@ -6,9 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-/**
- * 商品情報Dto
- */
+/** 商品情報Dto */
 @Data
 public class ProductDto {
   private int id;
@@ -27,6 +25,7 @@ public class ProductDto {
 
   /**
    * コンストラクタ
+   *
    * @param product 商品情報エンティティ
    */
   public ProductDto(Product product) {

@@ -1,7 +1,7 @@
 package com.restful.api.controller;
 
 import com.restful.api.service.CsvService;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.RequiredArgsConstructor;
-
 /**
  * CSVファイル関連コントローラー
- * 
+ *
  * @author yanaokahiroki
  */
 @RestController
@@ -26,12 +24,13 @@ public class CsvController {
 
   /**
    * CSVファイルをリクエスト時に送信することで直接DBへ保存する
-   * 
+   *
    * @param multipartFile CSVファイル
    * @throws HttpMediaTypeNotSupportedException CSVファイル以外をパラメータに指定した場合の例外
    */
   @PostMapping("/upload")
-  public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile multipartFile) throws HttpMediaTypeNotSupportedException {
+  public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile multipartFile)
+      throws HttpMediaTypeNotSupportedException {
     String message = "";
     if (!csvService.isCsvFormat(multipartFile)) {
       message = "CSVファイルをアップロードしてください。";
@@ -39,6 +38,6 @@ public class CsvController {
     }
     csvService.registerProductFromCsv(multipartFile);
     message = "完了";
-    return new ResponseEntity<String>(message, HttpStatus.OK);
+    return new ResponseEntity<>(message, HttpStatus.OK);
   }
 }

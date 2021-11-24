@@ -28,14 +28,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-                
+
         '400':
           description: 'Validation Error'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MethodArgumentNotValidException'
-                
+
         '500':
           description: 'Internal Server Error'
           content:
@@ -44,11 +44,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerException'
 
     get:
-      tags: 
+      tags:
         - "Product"
       summary: "商品情報の取得(複数件)"
       description: "商品名を指定しその商品名に部分一致する商品情報を取得する。パラメータの指定がない場合や部分一致する商品情報が存在しない場合、全件取得する。"
-      parameters: 
+      parameters:
         - name: "keyword"
           in: query
           description: "検索したい商品名"
@@ -73,11 +73,11 @@ paths:
 
   /products/{id}:
     get:
-      tags: 
+      tags:
         - "Product"
       summary: "商品情報の取得(1件)"
       description: "取得したい商品のIDを指定し、その商品情報を取得する。"
-      parameters: 
+      parameters:
         - name: id
           in: path
           description: "商品のID"
@@ -92,14 +92,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        
+
         "404":
           description: "Not Found"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundException'
-        
+
         "500":
           description: "Internal Server Error"
           content:
@@ -108,11 +108,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerException'
 
     put:
-      tags: 
+      tags:
         - "Product"
       summary: "商品情報の変更"
       description: "変更したい商品のIDを指定し、その商品情報を変更する。"
-      parameters: 
+      parameters:
         - name: id
           in: path
           description: "商品のID"
@@ -127,7 +127,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-                
+
         "404":
           description: "Not Found"
           content:
@@ -143,11 +143,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerException'
 
     delete:
-      tags: 
+      tags:
         - "Product"
       summary: "商品情報の削除"
       description: "削除したい商品のIDを指定し、その商品情報を削除する。"
-      parameters: 
+      parameters:
         - name: id
           in: path
           description: "商品のID"
@@ -158,14 +158,14 @@ paths:
       responses:
         "204":
           description: "No Content"
-        
+
         "404":
           description: "Not Found"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundException'
-        
+
         "500":
           description: "Internal Server Error"
           content:
@@ -182,7 +182,7 @@ components:
         id:
           type: integer
           format: int64
-        title: 
+        title:
           type: string
           maxLength: 50
         body:
@@ -199,19 +199,19 @@ components:
         updatedAt:
           type: string
           format: date-time
-      example: 
+      example:
         id: 1
         title: "NIKE daybreak"
         body: "1979年に登場したランナー用シューズ。"
         price: 12000
         createdAt: 2021-10-11 19:00:00
         updatedAt: 2021-10-11 19:00:00
-        
+
     ProductList:
       type: array
       items:
         $ref: '#/components/schemas/Product'
-      example: 
+      example:
         - id: 1
           title: "NIKE daybreak"
           body: "1979年に登場したランナー用シューズ。"
@@ -239,12 +239,12 @@ components:
           format: int64
           minimum: 1
           maximum: 1000000
-      example: 
+      example:
         title: "NIKE daybreak"
         body: "1979年に登場したランナー用シューズ。"
         price: 12000
 
-    
+
     ErrorList:
       type: array
       items:
@@ -256,8 +256,8 @@ components:
           detail:
             type: string
             example: "商品名を入力してください。"
-  
-        
+
+
     ProductNotFoundException:
       type: object
       properties:
@@ -267,7 +267,7 @@ components:
         message:
           type: string
           example: "ID:xxの商品は存在しません。"
-          
+
     ProductAlreadyExistsException:
       type: object
       properties:

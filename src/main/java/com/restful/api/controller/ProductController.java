@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * 商品情報Controller
- * クライアントリクエスト、レスポンスを処理
+ * 商品情報Controller クライアントリクエスト、レスポンスを処理
  *
  * @author yanaokahiroki
  */
@@ -52,8 +51,7 @@ public class ProductController {
   }
 
   /**
-   * 商品情報を商品名で検索する
-   * クエリパラメータが空の場合は商品情報を全件取得する
+   * 商品情報を商品名で検索する クエリパラメータが空の場合は商品情報を全件取得する
    *
    * @param keyword キーワード
    * @return 商品情報List

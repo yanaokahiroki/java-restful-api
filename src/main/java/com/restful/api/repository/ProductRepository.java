@@ -17,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
   /**
    * 商品名にtitleが含まれている商品情報を取得する
+   *
    * @param title 商品名
    * @return 商品情報List
    */

@@ -3,7 +3,6 @@ package com.restful.api.exception;
 import com.restful.api.dto.ErrorDetailDto;
 import com.restful.api.dto.ErrorResponseDto;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
@@ -89,191 +88,164 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleHttpRequestMethodNotSupported(
       HttpRequestMethodNotSupportedException ex,
       HttpHeaders headers,
       HttpStatus status,
       WebRequest request) {
-    String message = messageSource.getMessage("error.notSupportedMethod", null, request.getLocale());
+    String message =
+        messageSource.getMessage("error.notSupportedMethod", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
-  
-  /**
-   * {@inheritDoc}
-   */
+
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleHttpMediaTypeNotSupported(
       HttpMediaTypeNotSupportedException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.notSupportedMediaType", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.notSupportedMediaType", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(
       HttpMediaTypeNotAcceptableException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.notAcceptableMediaType", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.notAcceptableMediaType", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleMissingPathVariable(
-      MissingPathVariableException ex,
-      HttpHeaders headers,
-      HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.missingPathVariable", null, request.getLocale());
+      MissingPathVariableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    String message =
+        messageSource.getMessage("error.missingPathVariable", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleMissingServletRequestParameter(
       MissingServletRequestParameterException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.missingServletRequestParameter", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.missingServletRequestParameter", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleServletRequestBindingException(
       ServletRequestBindingException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.servletRequestBinding", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.servletRequestBinding", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleConversionNotSupported(
       ConversionNotSupportedException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.notSupportedConversion", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.notSupportedConversion", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleTypeMismatch(
-      TypeMismatchException ex,
-      HttpHeaders headers,
-      HttpStatus status,
-      WebRequest request){
+      TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.typeMismatch", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleHttpMessageNotReadable(
       HttpMessageNotReadableException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.notReadableMessage", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.notReadableMessage", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleHttpMessageNotWritable(
       HttpMessageNotWritableException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.notWritableMessage", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.notWritableMessage", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleMissingServletRequestPart(
       MissingServletRequestPartException ex,
       HttpHeaders headers,
       HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.missingServletRequestPart", null, request.getLocale());
+      WebRequest request) {
+    String message =
+        messageSource.getMessage("error.missingServletRequestPart", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleBindException(
-      BindException ex,
-      HttpHeaders headers,
-      HttpStatus status,
-      WebRequest request){
+      BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.bind", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public ResponseEntity<Object> handleAsyncRequestTimeoutException(
-      AsyncRequestTimeoutException ex,
-      HttpHeaders headers,
-      HttpStatus status,
-      WebRequest request){
-    String message = messageSource.getMessage("error.asyncRequestTimeout", null, request.getLocale());
+      AsyncRequestTimeoutException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    String message =
+        messageSource.getMessage("error.asyncRequestTimeout", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
     return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
   }
 
   /**
    * CSVファイルのファイル超過した場合の例外ハンドラー
-   * 
+   *
    * @param ex 例外
    * @param request リクエスト
    */
