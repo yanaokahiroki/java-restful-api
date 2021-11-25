@@ -26,6 +26,11 @@ public class CsvService {
   private static final String TYPE = "text/csv";
   private final ProductRepository productRepository;
 
+  /**
+   * CSVファイルから商品情報を読み込みDBへ保存する
+   *
+   * @param multipartFile CSVファイル
+   */
   public void registerProductFromCsv(MultipartFile multipartFile) {
     try {
       List<Product> productList = convertCsvToList(multipartFile.getInputStream());
@@ -57,8 +62,8 @@ public class CsvService {
         CSVParser csvParser =
             new CSVParser(
                 reader,
-                CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim()); ) {
-      List<Product> productList = new ArrayList<Product>();
+                CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+      List<Product> productList = new ArrayList<>();
       Iterable<CSVRecord> csvRecordList = csvParser.getRecords();
 
       for (CSVRecord csvRecord : csvRecordList) {
