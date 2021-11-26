@@ -19,7 +19,7 @@ spring:
       schema-locations: classpath:schema.sql
   #      data-locations: classpath:data.sql
   jackson:
-    default-property-inclusion: non-null
+    default-property-inclusion: non_null
     serialization:
       indent-output: true
   mvc:
