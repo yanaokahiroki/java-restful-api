@@ -23,8 +23,17 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class CsvService {
-  private static final String TYPE = "text/csv";
   private final ProductRepository productRepository;
+  private static final String TYPE = "text/csv";
+  private static final String UTF_8 = StandardCharsets.UTF_8.name();
+  private static final CSVFormat CSV_FORMAT =
+      CSVFormat.DEFAULT
+          .builder()
+          .setHeader()
+          .setSkipHeaderRecord(true)
+          .setIgnoreHeaderCase(true)
+          .setTrim(true)
+          .build();
 
   /**
    * CSVファイルから商品情報を読み込みDBへ保存する
@@ -36,7 +45,7 @@ public class CsvService {
       List<Product> productList = convertCsvToList(multipartFile.getInputStream());
       productRepository.saveAll(productList);
     } catch (IOException e) {
-      throw new RuntimeException("CSVファイルからの保存に失敗しました。");
+      throw new IllegalArgumentException("CSVファイルからの保存に失敗しました。");
     }
   }
 
@@ -57,12 +66,9 @@ public class CsvService {
    * @return ProductのList
    */
   private List<Product> convertCsvToList(InputStream inputStream) {
-    try (BufferedReader reader =
-            new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8.name()));
-        CSVParser csvParser =
-            new CSVParser(
-                reader,
-                CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())) {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, UTF_8));
+         CSVParser csvParser = new CSVParser(reader, CSV_FORMAT)
+    ) {
       List<Product> productList = new ArrayList<>();
       Iterable<CSVRecord> csvRecordList = csvParser.getRecords();
 
@@ -79,7 +85,7 @@ public class CsvService {
       }
       return productList;
     } catch (IOException exception) {
-      throw new RuntimeException("CSVファイルの解析に失敗しました。");
+      throw new IllegalArgumentException("CSVファイルの解析に失敗しました。");
     }
   }
 }
