@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "setting.content-type",
+      "type": "java.lang.String",
+      "description": "Content-typeを設定するプロパティ."
+  }
+] }

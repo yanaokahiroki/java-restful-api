@@ -38,6 +38,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'org.apache.commons:commons-csv:1.9.0'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 test {

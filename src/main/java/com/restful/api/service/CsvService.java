@@ -1,5 +1,6 @@
 package com.restful.api.service;
 
+import com.restful.api.configuration.ContentTypeConfig;
 import com.restful.api.dto.ProductDto;
 import com.restful.api.entity.Product;
 import com.restful.api.repository.ProductRepository;
@@ -32,7 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CsvService {
   private final ProductRepository productRepository;
-  private static final String TYPE = "text/csv";
+  private final ContentTypeConfig contentTypeConfig;
   private static final String UTF_8 = StandardCharsets.UTF_8.name();
   private static final CSVFormat CSV_FORMAT =
       CSVFormat.DEFAULT
@@ -64,7 +65,7 @@ public class CsvService {
    * @return "CSV形式ファイルならtrue
    */
   public boolean isCsvFormat(MultipartFile file) {
-    return TYPE.equals(file.getContentType());
+    return contentTypeConfig.getContentType().equals(file.getContentType());
   }
 
   /**

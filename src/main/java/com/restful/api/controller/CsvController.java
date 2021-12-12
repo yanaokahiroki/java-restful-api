@@ -1,5 +1,6 @@
 package com.restful.api.controller;
 
+import com.restful.api.configuration.ContentTypeConfig;
 import com.restful.api.service.CsvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -29,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/api/v1/csv")
 public class CsvController {
   private final CsvService csvService;
+  private final ContentTypeConfig contentTypeConfig;
 
   /**
    * CSVファイルをリクエスト時に送信することで直接DBへ保存する
@@ -61,7 +63,7 @@ public class CsvController {
     InputStreamResource file = new InputStreamResource(csvService.load());
     return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-            .contentType(MediaType.parseMediaType("application/csv"))
+            .contentType(MediaType.parseMediaType(contentTypeConfig.getContentType()))
             .body(file);
   }
 }
