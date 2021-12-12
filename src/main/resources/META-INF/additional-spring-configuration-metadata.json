@@ -4,5 +4,10 @@
       "name": "setting.content-type",
       "type": "java.lang.String",
       "description": "Content-typeを設定するプロパティ."
-  }
-] }
+    },
+    {
+      "name": "setting.extension",
+      "type": "java.lang.String",
+      "description": "拡張子を設定するプロパティ."
+    }
+  ] }

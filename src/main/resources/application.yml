@@ -72,3 +72,4 @@ logging:
 
 setting:
   content-type: "text/csv"
+  extension: ".csv"

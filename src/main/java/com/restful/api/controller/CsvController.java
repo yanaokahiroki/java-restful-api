@@ -58,8 +58,8 @@ public class CsvController {
    */
   @GetMapping("/download")
   public ResponseEntity<Resource> downloadCsvFile() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    String fileName = LocalDateTime.now().format(formatter) + ".csv";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    String fileName = LocalDateTime.now().format(formatter) + contentTypeConfig.getExtension();
     InputStreamResource file = new InputStreamResource(csvService.load());
     return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
