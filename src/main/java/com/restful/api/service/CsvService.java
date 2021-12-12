@@ -1,22 +1,30 @@
 package com.restful.api.service;
 
+import com.restful.api.dto.ProductDto;
 import com.restful.api.entity.Product;
 import com.restful.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.QuoteMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -67,8 +75,7 @@ public class CsvService {
    */
   private List<Product> convertCsvToList(InputStream inputStream) {
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, UTF_8));
-         CSVParser csvParser = new CSVParser(reader, CSV_FORMAT)
-    ) {
+        CSVParser csvParser = new CSVParser(reader, CSV_FORMAT)) {
       List<Product> productList = new ArrayList<>();
       Iterable<CSVRecord> csvRecordList = csvParser.getRecords();
 
@@ -86,6 +93,51 @@ public class CsvService {
       return productList;
     } catch (IOException exception) {
       throw new IllegalArgumentException("CSVファイルの解析に失敗しました。");
+    }
+  }
+
+  /** DBから取得したレコードをリストにして別メソッドに渡す */
+  public ByteArrayInputStream load() {
+    List<ProductDto> productList = getAllProduct();
+    return convertListToCsv(productList);
+  }
+
+  /**
+   * DBから取得したレコードをリストにする
+   *
+   * @return リスト
+   */
+  public List<ProductDto> getAllProduct() {
+    List<Product> productList = productRepository.findAll();
+    return productList.stream().map(ProductDto::new).toList();
+  }
+
+  /**
+   * 商品情報リストをCSV形式にする
+   *
+   * @param productList 商品情報リスト
+   */
+  private ByteArrayInputStream convertListToCsv(List<ProductDto> productList) {
+    CSVFormat format = CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.MINIMAL).build();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(outputStream), format)) {
+      for (ProductDto product : productList) {
+        List<String> list =
+            Arrays.asList(
+                String.valueOf(product.getId()),
+                product.getTitle(),
+                product.getBody(),
+                String.valueOf(product.getPrice()),
+                product.getCreatedAt().format(formatter),
+                product.getUpdatedAt().format(formatter));
+        csvPrinter.printRecord(list);
+      }
+      csvPrinter.flush();
+      return new ByteArrayInputStream(outputStream.toByteArray());
+    } catch (IOException exception) {
+      throw new IllegalArgumentException("失敗しました。");
     }
   }
 }
