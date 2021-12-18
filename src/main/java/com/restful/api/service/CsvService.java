@@ -34,6 +34,7 @@ import java.util.List;
 public class CsvService {
   private final ProductRepository productRepository;
   private final ContentTypeConfig contentTypeConfig;
+  private final ProductService productService;
   private static final String UTF_8 = StandardCharsets.UTF_8.name();
   private static final CSVFormat CSV_FORMAT =
       CSVFormat.DEFAULT
@@ -99,18 +100,8 @@ public class CsvService {
 
   /** DBから取得したレコードをリストにして別メソッドに渡す */
   public ByteArrayInputStream load() {
-    List<ProductDto> productList = getAllProduct();
+    List<ProductDto> productList = productService.getAllProduct();
     return convertListToCsv(productList);
-  }
-
-  /**
-   * DBから取得したレコードをリストにする
-   *
-   * @return リスト
-   */
-  public List<ProductDto> getAllProduct() {
-    List<Product> productList = productRepository.findAll();
-    return productList.stream().map(ProductDto::new).toList();
   }
 
   /**
