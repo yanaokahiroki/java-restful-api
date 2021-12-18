@@ -1,6 +1,5 @@
 package com.restful.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.restful.api.entity.Product;
 import lombok.Data;
 
@@ -17,10 +16,8 @@ public class ProductDto {
 
   private int price;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime updatedAt;
 
   /**
