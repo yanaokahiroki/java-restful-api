@@ -36,7 +36,7 @@ public class Product {
   private int price;
 
   @CreationTimestamp
-  @Column(nullable = false)
+  @Column(nullable = false, updatable = false)
   private LocalDateTime createdAt;
 
   @UpdateTimestamp

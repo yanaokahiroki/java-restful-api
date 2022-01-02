@@ -93,7 +93,7 @@ public class ProductService {
     product.setTitle(targetProduct.getTitle());
     product.setBody(targetProduct.getBody());
     product.setPrice(targetProduct.getPrice());
-    Product updatedProduct = productRepository.save(product);
+    Product updatedProduct = productRepository.saveAndFlush(product);
     return new ProductDto(updatedProduct);
   }
 
