@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,9 +86,7 @@ public class CsvService {
                 Integer.parseInt(csvRecord.get("id")),
                 csvRecord.get("title"),
                 csvRecord.get("body"),
-                Integer.parseInt(csvRecord.get("price")),
-                LocalDateTime.parse("2021-11-01T11:11:11"),
-                LocalDateTime.parse("2021-11-02T11:11:11"));
+                Integer.parseInt(csvRecord.get("price")));
         productList.add(product);
       }
       return productList;
