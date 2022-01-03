@@ -59,8 +59,8 @@ public class CsvController {
     String fileName = LocalDateTime.now().format(formatter) + contentTypeConfig.getExtension();
     InputStreamResource file = new InputStreamResource(csvService.load());
     return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-            .contentType(MediaType.parseMediaType(contentTypeConfig.getContentType()))
-            .body(file);
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+        .contentType(MediaType.parseMediaType(contentTypeConfig.getContentType()))
+        .body(file);
   }
 }
