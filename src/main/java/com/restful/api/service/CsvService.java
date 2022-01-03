@@ -90,7 +90,7 @@ public class CsvService {
         productList.add(product);
       }
       return productList;
-    } catch (IOException exception) {
+    } catch (IOException | NumberFormatException exception) {
       throw new IllegalArgumentException("CSVファイルの解析に失敗しました。");
     }
   }
