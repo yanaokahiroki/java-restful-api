@@ -41,14 +41,11 @@ public class CsvController {
   @PostMapping("/upload")
   public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile multipartFile)
       throws HttpMediaTypeNotSupportedException {
-    String message;
     if (!csvService.isCsvFormat(multipartFile)) {
-      message = "CSVファイルをアップロードしてください。";
-      throw new HttpMediaTypeNotSupportedException(message);
+      throw new HttpMediaTypeNotSupportedException("CSVファイルをアップロードしてください。");
     }
     csvService.registerProductFromCsv(multipartFile);
-    message = "完了";
-    return new ResponseEntity<>(message, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   /**
