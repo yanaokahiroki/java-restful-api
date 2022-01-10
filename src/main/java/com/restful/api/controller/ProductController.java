@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * 商品情報Controller クライアントリクエスト、レスポンスを処理
@@ -58,11 +59,8 @@ public class ProductController {
    */
   @GetMapping
   public ResponseEntity<List<ProductDto>> searchProduct(
-      @RequestParam(name = "keyword", required = false) String keyword) {
-    if (StringUtils.isBlank(keyword)) {
-      return new ResponseEntity<>(productService.getAllProduct(), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(productService.getProductByTitle(keyword), HttpStatus.OK);
+      @RequestParam(name = "keyword", required = false) Optional<String> keyword) {
+    return new ResponseEntity<>(productService.getProductByTitle(keyword.orElse("")), HttpStatus.OK);
   }
 
   /**
