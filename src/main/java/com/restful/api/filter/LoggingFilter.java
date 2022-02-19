@@ -1,6 +1,7 @@
 package com.restful.api.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.util.StopWatch;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -27,6 +28,9 @@ public class LoggingFilter extends OncePerRequestFilter {
     stopWatch.start();
 
     filterChain.doFilter(request, response);
+
+    String host = request.getHeader("host");
+    MDC.put("host", host != null ? host : "-");
 
     stopWatch.stop();
 
