@@ -85,7 +85,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .collect(Collectors.toList());
     String message = messageSource.getMessage("error.validate", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message, validatedErrorList);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -98,7 +98,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notSupportedMethod", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -111,7 +111,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notSupportedMediaType", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -124,7 +124,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notAcceptableMediaType", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -134,7 +134,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.missingPathVariable", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -147,7 +147,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.missingServletRequestParameter", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -160,7 +160,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.servletRequestBinding", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -173,7 +173,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notSupportedConversion", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -182,7 +182,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.typeMismatch", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -195,7 +195,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notReadableMessage", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -208,7 +208,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.notWritableMessage", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -221,7 +221,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.missingServletRequestPart", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -230,7 +230,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.bind", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /** {@inheritDoc} */
@@ -240,7 +240,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message =
         messageSource.getMessage("error.asyncRequestTimeout", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /**
@@ -270,7 +270,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     String message = messageSource.getMessage("error.notFound", null, request.getLocale());
     ErrorResponseDto response = new ErrorResponseDto(status.value(), message);
-    return super.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+    return super.handleExceptionInternal(ex, response, headers, status, request);
   }
 
   /**
