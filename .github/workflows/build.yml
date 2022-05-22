@@ -1,17 +1,15 @@
 name: Build gradle project
 on:
   workflow_dispatch:
-    inputs: {}
+    inputs:
+      java-version:
+        default: '17'
+        required: false
+        description: 'Version of Java'
   pull_request:
   push:
     branches:
       - main
-
-inputs:
-  java-version:
-    default: '17'
-    required: false
-    description: 'Version of Java'
 
 jobs:
   build:
