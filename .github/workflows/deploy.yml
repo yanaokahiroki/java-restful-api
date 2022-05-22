@@ -24,7 +24,7 @@ jobs:
         run: npm install -g redoc-cli
 
       - name: Build openAPI file
-        run: redoc-cli bundle ./docs/swagger.yml -o ./docs/index.html
+        run: redoc-cli build ./docs/swagger.yml -o ./docs/index.html
 
       - name: Deploy to netlify
         run: npx netlify-cli deploy --dir=./docs
