@@ -1,27 +1,30 @@
 name: OpenAPI Docs Build and Deploy to Netlify
 
 on:
+  workflow_dispatch:
+    inputs: {}
   push:
     paths:
       - 'docs/**'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: node setting
-        uses: actions/setup-node@v1
+      - name: Set up Node Env
+        uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 16
+          cache: npm
 
-      - name: install redoc
+      - name: Install redoc
         run: npm install -g redoc-cli
 
-      - name: build openAPI file
+      - name: Build openAPI file
         run: redoc-cli bundle ./docs/swagger.yml -o ./docs/index.html
 
       - name: Deploy to netlify
