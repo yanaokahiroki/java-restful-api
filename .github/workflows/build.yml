@@ -21,10 +21,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Set Up JDK ${{ inputs.java-version }}
+      - name: Set Up JDK ${{ github.event.inputs.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ inputs.java-version }}
+          java-version: ${{ github.event.inputs.java-version }}
           distribution: "adopt"
           cache: gradle
 
