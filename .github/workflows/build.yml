@@ -1,13 +1,5 @@
 name: Build gradle project
 on:
-  workflow_call:
-    inputs:
-      java-version:
-        description: 'Version of Java'
-        default: 17
-        required: true
-        type: number
-        
   pull_request:
   push:
     branches:
@@ -21,10 +13,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Set Up JDK ${{ github.event.inputs.java-version }}
+      - name: Set Up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ github.event.inputs.java-version }}
+          java-version: 17
           distribution: "adopt"
           cache: gradle
 
