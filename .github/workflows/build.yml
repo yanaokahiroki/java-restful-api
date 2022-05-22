@@ -1,0 +1,32 @@
+name: Build gradle project
+on:
+  workflow_dispatch:
+    inputs: {}
+  pull_request:
+  push:
+    branches:
+      - main
+
+inputs:
+  java-version:
+    default: '17'
+    required: false
+    description: 'Version of Java'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Set Up JDK ${{ inputs.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: "adopt"
+          cache: gradle
+
+      - name: Build 
+        run: ./gradlew build --no-daemon
