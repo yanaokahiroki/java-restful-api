@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Check out
+      - name: Set up Workspace
         uses: actions/checkout@v3
 
       - name: Set Up JDK 17

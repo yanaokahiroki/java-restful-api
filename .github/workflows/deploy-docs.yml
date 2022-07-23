@@ -2,7 +2,6 @@ name: OpenAPI Docs Build and Deploy to Netlify
 
 on:
   workflow_dispatch:
-    inputs: {}
   push:
     paths:
       - 'docs/**'
@@ -12,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout
+      - name: Set up Workspace
         uses: actions/checkout@v3
 
       - name: Set up Node Env
