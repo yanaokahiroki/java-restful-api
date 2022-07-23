@@ -1,7 +1,7 @@
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-docker/mysql/data
+mysql/data
 
 ### IntelliJ IDEA ###
 out/
