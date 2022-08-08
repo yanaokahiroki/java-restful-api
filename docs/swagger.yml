@@ -278,19 +278,19 @@ components:
 
     MethodArgumentNotValidException:
       description: Validation Error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: integer
-                  example: 400
-                message:
-                  type: string
-                  example: バリデーションエラーです。
-                errorList:
-                  $ref: "#/components/schemas/ErrorList"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: バリデーションエラーです。
+              errorList:
+                $ref: "#/components/schemas/ErrorList"
 
     NotFoundException:
       type: object
