@@ -33,11 +33,7 @@ paths:
           $ref: '#/components/schemas/MethodArgumentNotValidException'
 
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerException'
+          $ref: '#/components/schemas/InternalServerException'
 
     get:
       tags:
@@ -62,11 +58,7 @@ paths:
                 $ref: '#/components/schemas/ProductList'
 
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerException'
+          $ref: '#/components/schemas/InternalServerException'
 
 
   /products/{id}:
@@ -92,18 +84,10 @@ paths:
                 $ref: '#/components/schemas/Product'
 
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundException'
+          $ref: '#/components/schemas/NotFoundException'
 
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerException'
+          $ref: '#/components/schemas/InternalServerException'
 
     put:
       tags:
@@ -127,18 +111,10 @@ paths:
                 $ref: '#/components/schemas/Product'
 
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundException'
+          $ref: '#/components/schemas/NotFoundException'
 
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerException'
+          $ref: '#/components/schemas/InternalServerException'
 
     delete:
       tags:
@@ -158,18 +134,10 @@ paths:
           description: No Content
 
         404:
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundException'
+          $ref: '#/components/schemas/NotFoundException'
 
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerException'
+          $ref: '#/components/schemas/InternalServerException'
 
 
 components:
@@ -293,21 +261,29 @@ components:
                 $ref: "#/components/schemas/ErrorList"
 
     NotFoundException:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: 存在しないURLです。
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: 存在しないURLです。
 
     InternalServerException:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 500
-        message:
-          type: string
-          example: サーバー内でエラーが発生しています。
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: サーバー内でエラーが発生しています。
