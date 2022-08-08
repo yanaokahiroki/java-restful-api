@@ -30,11 +30,7 @@ paths:
                 $ref: '#/components/schemas/Product'
 
         400:
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MethodArgumentNotValidException'
+          $ref: '#/components/schemas/MethodArgumentNotValidException'
 
         500:
           description: Internal Server Error
@@ -281,16 +277,20 @@ components:
           example: xxはすでに存在しています。
 
     MethodArgumentNotValidException:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 400
-        message:
-          type: string
-          example: バリデーションエラーです。
-        errorList:
-          $ref: "#/components/schemas/ErrorList"
+      description: Validation Error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 400
+                message:
+                  type: string
+                  example: バリデーションエラーです。
+                errorList:
+                  $ref: "#/components/schemas/ErrorList"
 
     NotFoundException:
       type: object
