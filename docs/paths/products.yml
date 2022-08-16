@@ -1,0 +1,48 @@
+post:
+  tags:
+    - Product
+  summary: 商品情報の登録
+  description: 入力した情報で商品を登録する。
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../swagger.yml#/components/schemas/ProductForm'
+  responses:
+    201:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/Product'
+
+    400:
+      $ref: '../swagger.yml#/components/schemas/MethodArgumentNotValidException'
+
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'
+
+get:
+  tags:
+    - Product
+  summary: 商品情報の取得(複数件)
+  description: |
+    商品名を指定しその商品名に部分一致する商品情報を取得する。 \
+    パラメータの指定がない場合や部分一致する商品情報が存在しない場合、全件取得する。
+  parameters:
+    - name: keyword
+      in: query
+      description: 検索したい商品名
+      schema:
+        type: string
+        maxLength: 100
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/ProductList'
+
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'

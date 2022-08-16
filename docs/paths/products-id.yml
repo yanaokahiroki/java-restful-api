@@ -1,0 +1,76 @@
+get:
+  tags:
+    - Product
+  summary: 商品情報の取得(1件)
+  description: 取得したい商品のIDを指定し、その商品情報を取得する。
+  parameters:
+    - name: id
+      in: path
+      description: 商品のID
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/Product'
+
+    404:
+      $ref: '../swagger.yml#/components/schemas/NotFoundException'
+
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'
+
+put:
+  tags:
+    - Product
+  summary: 商品情報の変更
+  description: 変更したい商品のIDを指定し、その商品情報を変更する。
+  parameters:
+    - name: id
+      in: path
+      description: 商品のID
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/Product'
+
+    404:
+      $ref: '../swagger.yml#/components/schemas/NotFoundException'
+
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'
+
+delete:
+  tags:
+    - Product
+  summary: 商品情報の削除
+  description: 削除したい商品のIDを指定し、その商品情報を削除する。
+  parameters:
+    - name: id
+      in: path
+      description: 商品のID
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    204:
+      description: No Content
+
+    404:
+      $ref: '../swagger.yml#/components/schemas/NotFoundException'
+
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'
