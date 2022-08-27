@@ -1,0 +1,17 @@
+get:
+  tags:
+    - Csv
+  summary: 商品情報のダウンロード
+  description: |
+    商品情報をCSVファイルにしてダウンロードする。 \
+    ファイル名はyyyyMMdd.csvの形式。
+  responses:
+    200:
+      description: OK
+      content:
+        text/csv:
+          schema:
+            type: file
+            description: CSVファイル(yyyyMMdd.csv)
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'

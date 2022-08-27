@@ -1,0 +1,22 @@
+post:
+  tags:
+    - Csv
+  summary: CSVファイルから商品情報を登録
+  description: CSVファイルから商品情報を登録する。
+  requestBody:
+    required: true
+    content:
+      text/csv:
+        schema:
+          type: object
+          properties:
+            file:
+              type: file
+              description: CSVファイル(*.csv)
+          required:
+            - file
+  responses:
+    200:
+      description: OK
+    500:
+      $ref: '../swagger.yml#/components/schemas/InternalServerException'

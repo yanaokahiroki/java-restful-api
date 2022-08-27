@@ -9,12 +9,18 @@ servers:
 tags:
   - name: Product
     description: 商品の情報を管理する
+  - name: Csv
+    description: CSVファイル関連
 
 paths:
   /products:
     $ref: './paths/products.yml'
   /products/{id}:
     $ref: './paths/products-id.yml'
+  /csv/upload:
+    $ref: './paths/csv-upload.yml'
+  /csv/download:
+    $ref: './paths/csv-download.yml'
 
 components:
   schemas:
