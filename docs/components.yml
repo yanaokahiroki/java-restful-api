@@ -51,21 +51,27 @@ ProductForm:
   type: object
   properties:
     title:
+      description: 商品名
       type: string
       maxLength: 50
     body:
+      description: 概要
       type: string
       maxLength: 100
     price:
+      description: 価格
       type: integer
       format: int64
       minimum: 1
       maximum: 1000000
+  required:
+    - title
+    - body
+    - price
   example:
     title: NIKE daybreak
     body: 1979年に登場したランナー用シューズ。
     price: 12000
-
 
 ErrorList:
   type: array
@@ -78,7 +84,6 @@ ErrorList:
       detail:
         type: string
         example: 商品名を入力してください。
-
 
 ProductNotFoundException:
   type: object

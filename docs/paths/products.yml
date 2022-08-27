@@ -4,6 +4,7 @@ post:
   summary: 商品情報の登録
   description: 入力した情報で商品を登録する。
   requestBody:
+    required: true
     content:
       application/json:
         schema:
