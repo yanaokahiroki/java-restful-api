@@ -2,6 +2,7 @@
 build/
 !gradle/wrapper/gradle-wrapper.jar
 mysql/data
+docs/index.html
 
 ### IntelliJ IDEA ###
 out/
