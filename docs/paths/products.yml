@@ -16,10 +16,8 @@ post:
         application/json:
           schema:
             $ref: '../swagger.yml#/components/schemas/Product'
-
     400:
       $ref: '../swagger.yml#/components/schemas/MethodArgumentNotValidException'
-
     500:
       $ref: '../swagger.yml#/components/schemas/InternalServerException'
 
@@ -44,6 +42,5 @@ get:
         application/json:
           schema:
             $ref: '../swagger.yml#/components/schemas/ProductList'
-
     500:
       $ref: '../swagger.yml#/components/schemas/InternalServerException'

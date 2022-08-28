@@ -18,10 +18,8 @@ get:
         application/json:
           schema:
             $ref: '../swagger.yml#/components/schemas/Product'
-
     404:
       $ref: '../swagger.yml#/components/schemas/NotFoundException'
-
     500:
       $ref: '../swagger.yml#/components/schemas/InternalServerException'
 
@@ -45,10 +43,8 @@ put:
         application/json:
           schema:
             $ref: '../swagger.yml#/components/schemas/Product'
-
     404:
       $ref: '../swagger.yml#/components/schemas/NotFoundException'
-
     500:
       $ref: '../swagger.yml#/components/schemas/InternalServerException'
 
@@ -68,9 +64,7 @@ delete:
   responses:
     204:
       description: No Content
-
     404:
       $ref: '../swagger.yml#/components/schemas/NotFoundException'
-
     500:
       $ref: '../swagger.yml#/components/schemas/InternalServerException'
