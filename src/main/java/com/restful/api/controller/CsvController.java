@@ -39,7 +39,7 @@ public class CsvController {
    * @throws HttpMediaTypeNotSupportedException CSVファイル以外をパラメータに指定した場合の例外
    */
   @PostMapping("/upload")
-  public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile multipartFile)
+  public ResponseEntity<String> upload(@RequestParam("file") MultipartFile multipartFile)
       throws HttpMediaTypeNotSupportedException {
     if (!csvService.isCsvFormat(multipartFile)) {
       throw new HttpMediaTypeNotSupportedException("CSVファイルをアップロードしてください。");
@@ -54,7 +54,7 @@ public class CsvController {
    * @return CSVファイル
    */
   @GetMapping("/download")
-  public ResponseEntity<Resource> downloadCsvFile() {
+  public ResponseEntity<Resource> download() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     String fileName = LocalDateTime.now().format(formatter) + contentTypeConfig.getExtension();
     InputStreamResource file = new InputStreamResource(csvService.load());

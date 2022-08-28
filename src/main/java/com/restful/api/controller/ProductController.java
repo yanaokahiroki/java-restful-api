@@ -32,7 +32,7 @@ public class ProductController {
    * @return 登録した商品情報
    */
   @PostMapping
-  public ResponseEntity<ProductDto> registerProduct(
+  public ResponseEntity<ProductDto> register(
       @Valid @RequestBody ProductForm product, Locale locale) {
     return new ResponseEntity<>(
         productService.registerProduct(product, locale), HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class ProductController {
    * @return 商品情報
    */
   @GetMapping("/{id}")
-  public ResponseEntity<ProductDto> getProduct(@PathVariable int id, Locale locale) {
+  public ResponseEntity<ProductDto> get(@PathVariable int id, Locale locale) {
     return new ResponseEntity<>(productService.getProductById(id, locale), HttpStatus.OK);
   }
 
@@ -57,9 +57,10 @@ public class ProductController {
    * @return 商品情報List
    */
   @GetMapping
-  public ResponseEntity<List<ProductDto>> searchProduct(
+  public ResponseEntity<List<ProductDto>> search(
       @RequestParam(name = "keyword", required = false) Optional<String> keyword) {
-    return new ResponseEntity<>(productService.getProductByTitle(keyword.orElse("")), HttpStatus.OK);
+    return new ResponseEntity<>(
+        productService.getProductByTitle(keyword.orElse("")), HttpStatus.OK);
   }
 
   /**
@@ -71,7 +72,7 @@ public class ProductController {
    * @return 更新した商品情報
    */
   @PutMapping("/{id}")
-  public ResponseEntity<ProductDto> updateProduct(
+  public ResponseEntity<ProductDto> update(
       @PathVariable int id, @RequestBody ProductForm product, Locale locale) {
     return new ResponseEntity<>(productService.updateProduct(id, product, locale), HttpStatus.OK);
   }
@@ -83,7 +84,7 @@ public class ProductController {
    */
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteProduct(@PathVariable int id) {
+  public void delete(@PathVariable int id) {
     productService.deleteProduct(id);
   }
 }
