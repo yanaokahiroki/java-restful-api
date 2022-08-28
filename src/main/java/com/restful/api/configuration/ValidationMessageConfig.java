@@ -13,10 +13,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  */
 @Configuration
 @RequiredArgsConstructor
-public class ValidationMessageConfiguration {
+public class ValidationMessageConfig {
   private final MessageSource messageSource;
 
-  /** バリデーションメッセージのプロパティファイルを デフォルトのValidateMessageSourceからmessageSourceに変更しBeanとして定義 */
+  /**
+   * バリデーションメッセージのプロパティファイルを<br>
+   * デフォルトのValidateMessageSourceからmessageSourceに変更しBeanとして定義
+   */
   @Bean
   public LocalValidatorFactoryBean validator() {
     LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
