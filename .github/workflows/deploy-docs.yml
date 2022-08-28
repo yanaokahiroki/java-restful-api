@@ -26,7 +26,7 @@ jobs:
         run: redoc-cli build ./docs/swagger.yml --options.expandResponses=all --options.pathInMiddlePanel -o ./docs/index.html
 
       - name: Deploy to netlify
-        run: npx netlify-cli deploy --dir=./docs
+        run: npx netlify-cli deploy --dir=./docs --prod
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
