@@ -24,8 +24,7 @@ jobs:
 
       - name: Build openAPI file
         run: >
-          redoc-cli build ./docs/swagger.yml
-          -output ./docs/index.html
+          redoc-cli build ./docs/swagger.yml --output ./docs/index.html
           --options.expandResponses=all
           --options.pathInMiddlePanel
 
