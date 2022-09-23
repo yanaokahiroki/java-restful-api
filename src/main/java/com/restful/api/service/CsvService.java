@@ -81,13 +81,13 @@ public class CsvService {
       Iterable<CSVRecord> csvRecordList = csvParser.getRecords();
 
       for (CSVRecord csvRecord : csvRecordList) {
-        Product product =
-            new Product(
-                Integer.parseInt(csvRecord.get("id")),
-                csvRecord.get("title"),
-                csvRecord.get("body"),
-                Integer.parseInt(csvRecord.get("price")));
-        productList.add(product);
+        productList.add(
+            Product.builder()
+                .id(Integer.parseInt(csvRecord.get("id")))
+                .title(csvRecord.get("title"))
+                .body(csvRecord.get("body"))
+                .price(Integer.parseInt(csvRecord.get("price")))
+                .build());
       }
       return productList;
     } catch (IOException | NumberFormatException exception) {

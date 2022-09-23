@@ -2,6 +2,7 @@ package com.restful.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
  * @author yanaokahiroki
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -47,14 +49,4 @@ public class Product {
   @UpdateTimestamp
   @Column(nullable = false)
   private LocalDateTime updatedAt;
-
-  /**
-   * CSVファイルから読み込む際に使用
-   */
-  public Product(int id, String title, String body, int price) {
-    this.id = id;
-    this.title = title;
-    this.body = body;
-    this.price = price;
-  }
 }

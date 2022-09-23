@@ -39,11 +39,14 @@ public class ProductService {
           messageSource.getMessage(
               "error.product.already.exist", new String[] {productForm.getTitle()}, locale));
     }
-    Product product = new Product();
-    product.setTitle(productForm.getTitle());
-    product.setBody(productForm.getBody());
-    product.setPrice(productForm.getPrice());
-    Product registeredProduct = productRepository.save(product);
+
+    Product registeredProduct =
+        productRepository.save(
+            Product.builder()
+                .title(productForm.getTitle())
+                .body(productForm.getBody())
+                .price(productForm.getPrice())
+                .build());
     return new ProductDto(registeredProduct);
   }
 
