@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  mysql-server:
+  mysql:
     image: mysql:5.7
     platform: linux/amd64
-    container_name: "java-restful-api-db"
-    hostname: "java-restful-api-db"
+    container_name: "mysql-server"
+    hostname: "mysql-server"
     ports:
       - "3306:3306"
     environment:
