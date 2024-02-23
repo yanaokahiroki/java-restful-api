@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ContentTypeConfig {
   /** content-type */
   private String contentType;
+
   /** 拡張子 */
   private String extension;
 }

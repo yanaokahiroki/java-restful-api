@@ -1,10 +1,9 @@
 package com.restful.api.repository;
 
 import com.restful.api.entity.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * DBとのやり取りをする

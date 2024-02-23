@@ -1,8 +1,7 @@
 package com.restful.api.dto;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 /**
  * エラーレスポンス
