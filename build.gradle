@@ -9,6 +9,11 @@ version = '0.0.1'
 
 java {
     sourceCompatibility = '21'
+    targetCompatibility = '21'
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.BELLSOFT
+    }
 }
 
 springBoot {
