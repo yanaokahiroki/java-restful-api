@@ -1,9 +1,8 @@
 package com.restful.api.dto;
 
 import com.restful.api.entity.Product;
-import lombok.Data;
-
 import java.time.LocalDateTime;
+import lombok.Data;
 
 /** 商品情報Dto */
 @Data

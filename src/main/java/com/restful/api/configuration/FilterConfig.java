@@ -8,15 +8,13 @@ import org.springframework.core.Ordered;
 
 /**
  * ログフィルター用設定<br>
- *
  * {@link com.restful.api.filter.LoggingFilter}
+ *
  * @author yanaokahiroki
  */
 @Configuration
 public class FilterConfig {
-  /**
-   * ログフィルターBean
-   */
+  /** ログフィルターBean */
   @Bean
   public FilterRegistrationBean<LoggingFilter> filterRegistrationBean() {
     FilterRegistrationBean<LoggingFilter> bean = new FilterRegistrationBean<>(new LoggingFilter());
